@@ -101,8 +101,7 @@ function updateOutput () {
       qrCodeCorrectionLevelContainer.style.display = "inline";
       
       //let qrCodeLink = `HTTP://HA.MR/${compress(input, outputAlphabetQR)}`;
-      //let qrCodeLink = `${projectUrl}/${compress(input, outputAlphabetQR)}`;
-      let qrCodeLink = `${projectUrl}${compress(input, outputAlphabetQR)}`;
+      let qrCodeLink = `${projectUrl}/?qr=${compress(input, outputAlphabetQR)}`;
       
       QRCode.toDataURL(qrCodeLink, {
         errorCorrectionLevel: errorCorrection,
@@ -141,6 +140,44 @@ inputLinkElement.addEventListener("input", updateOutput);
   let payload = null;
   let alphabet = outputAlphabetASCII;
 
+  const urlParams = new URLSearchParams(window.location.search);
+
+  // 1. Comprobar si viene por Hash (#)
+  if (window.location.hash) {
+    payload = decodeURIComponent(window.location.hash.slice(1));
+    payload = payload.replaceAll(" ", "");
+    const useEmoji = Array.from(payload).some(c => !outputAlphabetASCII.includes(c));
+    alphabet = useEmoji ? outputAlphabetEmoji : outputAlphabetASCII;
+  } 
+  // 2. Comprobar si viene por QR (?qr=)
+  else if (urlParams.has("qr")) {
+    payload = decodeURIComponent(urlParams.get("qr"));
+    alphabet = outputAlphabetQR;
+  }
+
+  if (payload && payload.trim()) {
+    try {
+      const target = decompress(payload, alphabet);
+      window.location.href = target;
+      return;
+    } catch (e) {
+      console.warn(`Redirect failed. Could not decode input.`);
+      console.error(e);
+    }
+  }
+
+  updateOutput();
+
+  document.querySelector("#loader").style.opacity = 0;
+  document.querySelector("#content").style.opacity = 1;
+  document.querySelector("#content").style.pointerEvents = "auto";
+})();
+
+/*
+(() => {
+  let payload = null;
+  let alphabet = outputAlphabetASCII;
+
   // Get hash value of current address bar
   if (window.location.hash) {
     // Decode hash value in case it's non-ASCII
@@ -175,3 +212,4 @@ inputLinkElement.addEventListener("input", updateOutput);
   document.querySelector("#content").style.pointerEvents = "auto";
 
 })();
+*/
