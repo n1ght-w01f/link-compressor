@@ -101,7 +101,8 @@ function updateOutput () {
       qrCodeCorrectionLevelContainer.style.display = "inline";
       
       //let qrCodeLink = `HTTP://HA.MR/${compress(input, outputAlphabetQR)}`;
-      let qrCodeLink = `${projectUrl}/${compress(input, outputAlphabetQR)}`;
+      //let qrCodeLink = `${projectUrl}/${compress(input, outputAlphabetQR)}`;
+      let qrCodeLink = `${projectUrl}${compress(input, outputAlphabetQR)}`;
       
       QRCode.toDataURL(qrCodeLink, {
         errorCorrectionLevel: errorCorrection,
