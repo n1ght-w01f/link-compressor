@@ -1,3 +1,28 @@
+# ⚡ Link Compressor (GitHub Pages Edition)
+
+> ⚠️ **Note / PoC:** This version is a **Proof of Concept (PoC)** adapted to run and deploy **100% statically on GitHub Pages** without requiring custom short domains or backend infrastructure. 
+> 
+> Due to how subdomains work on GitHub Pages (`your-username.github.io/repository-name`), **it is impossible to shorten the final length of links**. The sole purpose of this fork is to demonstrate the technical operation of the URL compression and encoding algorithm hosted on a free static platform.
+
+---
+
+## 📌 Original Project & Credits
+
+All technical credit, algorithm design, and original code belong to **PortalRunner**.
+
+* 🌐 **Official Website:** [ha.mr](https://ha.mr) *(Use the official website to actually compress links!)*
+* 🐙 **Official Repository:** [p2r3/ha.mr](https://github.com/p2r3/ha.mr)
+* 📺 **Explainer Video:** To deep dive into the information theory, Huffman coding, and mechanics behind this project, watch the original video on YouTube: [I Made the World's First "Link Compressor"](https://www.youtube.com/watch?v=TOr1Vvji6jA) by **PortalRunner**.
+
+---
+
+## 🛠️ Changes in this Fork
+
+1. **Dynamic Routing for GitHub Pages:** Adapted generated URLs using `window.location` so it works out-of-the-box with the username and repository name of anyone who forks this project.
+2. **Redirect Support:** Adjusted client-side logic to properly handle hash (`#`) decoding and QR code redirection parameters without requiring a 4-character domain.
+
+---
+
 # ha.mr
 Compresses links and optimizes QR codes entirely in the browser, without a back-end database.
 
