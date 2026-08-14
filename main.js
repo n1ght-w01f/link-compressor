@@ -5,6 +5,12 @@ import {
   outputAlphabetEmoji
 } from "./alphabets.js";
 
+// Obtain the correct link for the redirect instead of hardcoded
+const repoName = window.location.pathname.split('/').filter(Boolean)[0];
+const projectUrl = `${window.location.origin}/${repoName}`;
+
+console.log("Executing on: " + projectUrl);
+
 var settings = {
   emoji: false,
   qr: false
@@ -81,14 +87,22 @@ function updateOutput () {
       outputRatioElement.textContent = "Output is the same length as the input";
       outputRatioElement.style.color = "gray";
     }
-    outputLinkElement.textContent = `http://ha.mr#${output}`;
-    outputLinkElement.href = `http://ha.mr#${output}`;
+    
+    //outputLinkElement.textContent = `http://ha.mr#${output}`;
+    //outputLinkElement.href = `http://ha.mr#${output}`;
+    outputLinkElement.textContent = `${projectUrl}#${output}`;
+    outputLinkElement.href = `${projectUrl}#${output}`;
+    
+    
     outputLinkElement.style.color = "";
     if (settings.qr) {
       const errorCorrection = ["L", "M", "Q", "H"][qrCodeCorrectionLevelElement.value];
       qrCodeImage.style.display = "inline";
       qrCodeCorrectionLevelContainer.style.display = "inline";
-      let qrCodeLink = `HTTP://HA.MR/${compress(input, outputAlphabetQR)}`;
+      
+      //let qrCodeLink = `HTTP://HA.MR/${compress(input, outputAlphabetQR)}`;
+      let qrCodeLink = `${projectUrl}/${compress(input, outputAlphabetQR)}`;
+      
       QRCode.toDataURL(qrCodeLink, {
         errorCorrectionLevel: errorCorrection,
         scale: 8
